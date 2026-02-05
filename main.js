@@ -347,6 +347,7 @@ function setupEventListeners() {
         currentState = GameState.PLAYING;
         initGame();
         showScreen('game-screen');
+        gameLoop();
     });
 
     // リトライボタン
@@ -354,6 +355,7 @@ function setupEventListeners() {
         currentState = GameState.PLAYING;
         initGame();
         showScreen('game-screen');
+        gameLoop();
     });
 }
 
