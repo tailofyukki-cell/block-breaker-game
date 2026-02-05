@@ -228,6 +228,9 @@ function initGame() {
     initBricks();
     updateScore();
     updateLives();
+    
+    // 初回描画を確実に実行
+    draw();
 }
 
 // スコア更新
