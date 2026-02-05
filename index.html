@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ブロック崩し - Block Breaker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- タイトル画面 -->
+        <div id="title-screen" class="screen">
+            <h1>🎮 ブロック崩し</h1>
+            <p class="subtitle">Block Breaker Game</p>
+            <div class="instructions">
+                <h2>操作方法</h2>
+                <p><strong>PC:</strong> マウス移動 または ← → キー</p>
+                <p><strong>スマホ:</strong> 画面タッチ・スワイプ</p>
+            </div>
+            <button id="start-button" class="btn">ゲームスタート</button>
+        </div>
+
+        <!-- ゲーム画面 -->
+        <div id="game-screen" class="screen" style="display: none;">
+            <div id="game-info">
+                <div class="info-item">
+                    <span class="label">スコア:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">残機:</span>
+                    <span id="lives">3</span>
+                </div>
+            </div>
+            <canvas id="game-canvas"></canvas>
+        </div>
+
+        <!-- 結果画面 -->
+        <div id="result-screen" class="screen" style="display: none;">
+            <h1 id="result-title">クリア!</h1>
+            <p class="result-message" id="result-message">おめでとうございます!</p>
+            <div class="final-score">
+                <span class="label">最終スコア:</span>
+                <span id="final-score">0</span>
+            </div>
+            <button id="retry-button" class="btn">もう一度プレイ</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
