@@ -72,24 +72,24 @@ class Paddle {
     }
 
     update() {
-        // キーボード操作
-        if (keys['ArrowLeft']) {
-            this.moveLeft();
-        }
-        if (keys['ArrowRight']) {
-            this.moveRight();
-        }
-
-        // マウス操作
-        if (mouseX > 0) {
-            this.x = mouseX - this.width / 2;
-            this.x = Math.max(0, Math.min(config.canvas.width - this.width, this.x));
-        }
-
-        // タッチ操作
+        // タッチ操作（最優先）
         if (touchX !== null) {
             this.x = touchX - this.width / 2;
             this.x = Math.max(0, Math.min(config.canvas.width - this.width, this.x));
+        }
+        // マウス操作（中優先）
+        else if (mouseX > 0) {
+            this.x = mouseX - this.width / 2;
+            this.x = Math.max(0, Math.min(config.canvas.width - this.width, this.x));
+        }
+        // キーボード操作（低優先）
+        else {
+            if (keys['ArrowLeft']) {
+                this.moveLeft();
+            }
+            if (keys['ArrowRight']) {
+                this.moveRight();
+            }
         }
     }
 }
@@ -228,6 +228,14 @@ function initGame() {
     initBricks();
     updateScore();
     updateLives();
+    
+    // 操作入力をリセット
+    mouseX = 0;
+    touchX = null;
+    keys = {};
+    
+    // 初回描画を確実に実行
+    draw();
 }
 
 // スコア更新
@@ -307,7 +315,8 @@ function setupEventListeners() {
     // マウス
     canvas.addEventListener('mousemove', (e) => {
         const rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        mouseX = (e.clientX - rect.left) * scaleX;
     });
 
     canvas.addEventListener('mouseleave', () => {
@@ -318,13 +327,15 @@ function setupEventListeners() {
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
-        touchX = e.touches[0].clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        touchX = (e.touches[0].clientX - rect.left) * scaleX;
     });
 
     canvas.addEventListener('touchmove', (e) => {
         e.preventDefault();
         const rect = canvas.getBoundingClientRect();
-        touchX = e.touches[0].clientX - rect.left;
+        const scaleX = canvas.width / rect.width;
+        touchX = (e.touches[0].clientX - rect.left) * scaleX;
     });
 
     canvas.addEventListener('touchend', () => {
